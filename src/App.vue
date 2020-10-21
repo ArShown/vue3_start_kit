@@ -13,7 +13,6 @@ export default {
       const currentLayout = defaultTo("default")(
         path(["meta", "layout"], this.$route)
       );
-
       return (
         toUpper(head(`${currentLayout}Layout`)) + tail(`${currentLayout}Layout`)
       );
