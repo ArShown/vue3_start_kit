@@ -1,5 +1,6 @@
 <template>
   <div>Home</div>
+  <HelloWorld msg="hi" />
   <router-link to="/about">To About</router-link>
 </template>
 
