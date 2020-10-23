@@ -1,16 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import {
-  findIndex,
-  propEq,
-  set,
-  lensPath,
-  map,
-  pipe,
-  toPairs,
-  reduce,
-  forEach,
-  has,
-} from "ramda";
+import { set, lensPath, map, pipe, toPairs, reduce, forEach, has } from "ramda";
 import pages from "./pages";
 
 const options = {
@@ -27,9 +16,7 @@ const options = {
  * @param {Array<Object>>} routes
  * @return {Array<Object>>}
  */
-const compileRoutes = (routes) => {
-  const defaultIndex = findIndex(propEq("path", options.defaultPath))(pages);
-  if (defaultIndex < 0) throw new Error("找不到預設路由");
+const compileRoutes = () => {
   const invertRouteLayout = pipe(
     toPairs,
     reduce((obj, [key, values]) => {
@@ -38,23 +25,24 @@ const compileRoutes = (routes) => {
     }, {})
   )(options.layouts);
 
-  const currentPages = pipe(
-    set(lensPath([defaultIndex, "path"]), "/"),
-    map((obj) => {
-      if (has(obj.path, invertRouteLayout))
-        return set(
-          lensPath(["meta", "layout"]),
-          invertRouteLayout[obj.path],
-          obj
-        );
-      return obj;
-    })
-  )(pages);
-
-  return [...currentPages, ...routes];
+  return map((obj) => {
+    if (has(obj.path, invertRouteLayout))
+      return set(
+        lensPath(["meta", "layout"]),
+        invertRouteLayout[obj.path],
+        obj
+      );
+    return obj;
+  })(pages);
 };
 
 const routes = compileRoutes([
+  {
+    path: "/",
+    name: "index",
+    redirect: { path: options.defaultPath },
+  },
+  ...compileRoutes(),
   {
     path: "/:pathMatch(.*)*",
     name: "not-found",
@@ -64,14 +52,8 @@ const routes = compileRoutes([
 ]);
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes,
 });
-
-// 登入驗證
-// router.beforeEach((to, from, next) => {
-//   if (to.name !== 'Login' && !isAuthenticated) next({ name: 'Login' })
-//   else next()
-// })
 
 export default router;
