@@ -18,6 +18,7 @@
     }
   },
   "dependencies": {
+    "@vue/composition-api": "^1.0.0-beta.18",
     "@vuelidate/core": "^1.0.0-alpha.2",
     "@vuelidate/validators": "^1.0.0-alpha.2",
     "axios": "^0.20.0",

@@ -6,7 +6,7 @@ files.keys().forEach((key) => {
   if (key === "./index.js") return;
   const { plugin, options = {} } = require(`@/hooks/${path.normalize(
     key
-  )}`).default;
+  )}`).install;
   plugins.push({
     plugin,
     options,

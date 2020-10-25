@@ -1,7 +1,7 @@
 /**
  * in component
  *
- * import { useToast } from "vue-toastification";
+ * import useToast from "@/hooks/use-toast";
  * ...
  * setup() {
  *   // Get toast interface
@@ -9,10 +9,10 @@
  *   ...
  * }
  */
-import Toast, { POSITION } from "vue-toastification";
+import Toast, { POSITION, useToast } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
-export default {
+export const install = {
   plugin: Toast,
   options: {
     transition: "Vue-Toastification__bounce",
@@ -26,3 +26,5 @@ export default {
     rtl: false,
   },
 };
+
+export default useToast;
