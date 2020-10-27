@@ -1,0 +1,27 @@
+name: gh-pages
+
+on:
+  # push 到 master 分支時會觸發
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 13
+      - uses: expo/expo-github-action@v5
+      - run: npm install
+      - run: npm run build:web
+      - uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: web-build # The folder the action should deploy.
