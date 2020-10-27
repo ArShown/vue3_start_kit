@@ -17,7 +17,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 13
-      - uses: expo/expo-github-action@v5
       - run: yarn install
       - run: yarn run build
       - uses: JamesIves/github-pages-deploy-action@releases/v3
