@@ -18,10 +18,10 @@ jobs:
         with:
           node-version: 13
       - uses: expo/expo-github-action@v5
-      - run: npm install
-      - run: npm run build:web
+      - run: yarn install
+      - run: yarn run build
       - uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: web-build # The folder the action should deploy.
+          FOLDER: dist # The folder the action should deploy.
