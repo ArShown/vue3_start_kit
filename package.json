@@ -9,7 +9,9 @@
     "prettier": "prettier --write **/*.{vue,js,css}"
   },
   "lint-staged": {
-    "*.{js,css,vue}": "eslint"
+    "*.md": "prettier --write",
+    "*.{js,vue,css}": "prettier --write",
+    "*.{js,vue}": "eslint --fix"
   },
   "husky": {
     "hooks": {
@@ -22,6 +24,7 @@
     "@vuelidate/core": "^1.0.0-alpha.2",
     "@vuelidate/validators": "^1.0.0-alpha.2",
     "axios": "^0.20.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "core-js": "^3.6.5",
     "moment": "^2.29.1",
     "ramda": "^0.27.1",

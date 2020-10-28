@@ -14,7 +14,9 @@ files.keys().forEach((key) => {
 const layouts = {
   install: (app) => {
     modules.forEach((m) => {
-      app.config.globalProperties[m.alias] = m.value;
+      // app.config.globalProperties[m.alias] = m.value;
+      /* 使用 inject 引入 */
+      app.provide(m.alias, m.value);
     });
   },
 };
