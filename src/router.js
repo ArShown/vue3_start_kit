@@ -36,20 +36,25 @@ const compileRoutes = () => {
   })(pages);
 };
 
-const routes = compileRoutes([
+const routes = [
   {
     path: "/",
-    name: "index",
-    redirect: { path: options.defaultPath },
+    name: "default-path",
+    redirect: { name: options.defaultPath },
   },
   ...compileRoutes(),
   {
-    path: "/:pathMatch(.*)*",
+    path: "/404",
     name: "not-found",
     meta: { layout: "error" },
     component: { template: null },
   },
-]);
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not-match",
+    redirect: { name: "not-found" },
+  },
+];
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),

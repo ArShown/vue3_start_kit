@@ -1,12 +1,21 @@
-import Default from "./default";
-import Empty from "./empty";
-import Error from "./error";
+const path = require("path");
+const files = require.context(".", true, /\.vue$/);
+const modules = [];
+
+files.keys().forEach((key) => {
+  if (key === "./index.js") return;
+  const filename = path.normalize(key).toLowerCase().replace(".vue", "");
+  modules.push({
+    filename,
+    component: require(`@/layouts/${path.normalize(key)}`).default,
+  });
+});
 
 const layouts = {
   install: (app) => {
-    app.component("DefaultLayout", Default);
-    app.component("EmptyLayout", Empty);
-    app.component("ErrorLayout", Error);
+    modules.forEach((m) => {
+      app.component(`${m.filename}-layout`, m.component);
+    });
   },
 };
 

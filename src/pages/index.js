@@ -12,6 +12,7 @@ files.keys().forEach((key) => {
 
   modules.push({
     path: currentPath,
+    name: currentPath,
     component: () => import(`@/pages/${path.normalize(key)}`),
   });
 });

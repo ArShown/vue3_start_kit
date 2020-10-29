@@ -1,4 +1,8 @@
 module.exports = {
-  plugins: ["transform-remove-console"],
   presets: ["@vue/cli-plugin-babel/preset"],
+  env: {
+    production: {
+      plugins: ["transform-remove-console"],
+    },
+  },
 };
