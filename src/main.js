@@ -7,6 +7,7 @@ import layouts from "./layouts";
 import plugins from "./plugins";
 import store from "./store";
 import hooks from "./hooks";
+import "@/assets/css/tailwind.css";
 
 const app = createApp(App);
 app.use(plugins);
