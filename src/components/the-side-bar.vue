@@ -21,6 +21,12 @@ export default {
         icon: "dashboard",
       },
       {
+        id: "5",
+        path: "/about",
+        title: "About",
+        icon: "dashboard",
+      },
+      {
         id: "2",
         title: "Nested",
         icon: "menu",

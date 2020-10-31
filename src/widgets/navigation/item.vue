@@ -27,7 +27,7 @@
           <span class="font-light">{{ model.title }}</span>
           <i
             class="absolute right-0 test-xs w-4 h-4 transform transition-transform duration-200 origin-center"
-            style="right: 1.5rem; top: 40%"
+            style="right: 1rem; top: 40%"
             v-if="'child' in model"
             :class="{
               'rotate-90': isOpen,
@@ -87,7 +87,7 @@ export default {
     });
     const Icon = computed(() =>
       "icon" in props.model
-        ? require(`./icons/${props.model.icon}`).default
+        ? require(`@/widgets/icons/${props.model.icon}`).default
         : null
     );
     const linkHandler = (e) => {
@@ -104,7 +104,7 @@ export default {
     return {
       child,
       Icon,
-      paddingRange: [0, 6, 10, 16, 24],
+      paddingRange: [0, 4, 10, 16, 24],
       isRoot: props.level === 1,
       linkHandler,
       isOpen,
