@@ -1,7 +1,6 @@
 <template>
   <div>
-    <router-link
-      :to="{ path: model.path || '#' }"
+    <a
       class="w-full overflow-hidden bg-transparent no-underline cursor-pointer"
       @click="linkHandler"
     >
@@ -54,11 +53,12 @@
           />
         </ul>
       </li>
-    </router-link>
+    </a>
   </div>
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 import { reactive, computed } from "vue";
 import ChevronRight from "./icons/chevron-right";
 
@@ -77,6 +77,7 @@ export default {
   },
   components: { ChevronRight },
   setup(props) {
+    const $router = useRouter();
     const isOpen = computed(() => props.model.isOpen);
     const isActive = computed(() => props.model.path === props.currentPath);
     const child = reactive({
@@ -91,8 +92,10 @@ export default {
     );
     const linkHandler = (e) => {
       e.stopPropagation();
-      if (child.isExist || !("path" in props.model)) e.preventDefault();
+      const hasPath = "path" in props.model;
+      if (child.isExist || !hasPath) e.preventDefault();
       props.onOpen(props.model.id);
+      hasPath && $router.push(props.model.path);
     };
     const onChildOpen = (id) => {
       child.menu = props.computeLogic(id)(child.menu);

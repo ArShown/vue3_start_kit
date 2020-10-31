@@ -33,7 +33,7 @@
     "sweetalert2": "^10.8.1",
     "tailwindcss": "^1.9.6",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-beta.13",
+    "vue-router": "^4.0.0-rc.1",
     "vue-toastification": "^2.0.0-beta.5",
     "vuex": "^4.0.0-beta.4",
     "vuex-router-sync": "^5.0.0"

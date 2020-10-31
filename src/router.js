@@ -79,8 +79,10 @@ router.beforeResolve(async (to, from, next) => {
   if (!includes(to.path, exceptAuthPaths)) {
     // store.commit(CLEAR_BREADCRUMB);
     /* 沒有登入就導向登入頁 */
-    if (!store.getters.isLogin) next({ name: "/login" });
-    else {
+    if (!store.getters.isLogin) {
+      next({ name: "/login" });
+      return false;
+    } else {
       // const breadcrumb = defaultTo([])(
       //   path(["matched", 0, "components", "default", "breadcrumb"], to)
       // );
