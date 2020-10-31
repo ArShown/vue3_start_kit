@@ -1602,15 +1602,17 @@
   resolved "https://registry.npm.taobao.org/@vue/web-component-wrapper/download/@vue/web-component-wrapper-1.2.0.tgz#bb0e46f1585a7e289b4ee6067dcc5a6ae62f1dd1"
   integrity sha1-uw5G8VhafiibTuYGfcxaauYvHdE=
 
-"@vuelidate/core@^1.0.0-alpha.2":
-  version "1.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-1.0.0-alpha.2.tgz#fbfe6796bbcf4715f702e0ba0e13eb0ac9585fe8"
-  integrity sha512-iHINAf8hT696l7BFCHlOjWIIBicrhI2jkPBXHOv0wizD1U1whshotQZofd321QkZMqs9RwEWg6qBIq2CfMxAiw==
+"@vuelidate/core@^2.0.0-alpha.6":
+  version "2.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-2.0.0-alpha.6.tgz#91ba1af07ca84feb0ed4d9df420f0558b7ff31fe"
+  integrity sha512-n+AQTMcyOAU7XCnbboqR93PcBUaSjs6vVZt2pWzWucVJsFc4Vt9GYhjSIOTksEoRunMvLLGh9y6fj2i8ducewQ==
+  dependencies:
+    vue-demi latest
 
-"@vuelidate/validators@^1.0.0-alpha.2":
-  version "1.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@vuelidate/validators/-/validators-1.0.0-alpha.2.tgz#8737ec88acc6b188b9e731652ff7df39c186407a"
-  integrity sha512-QHxUhDwpp8Gsbv2jj39wha7zrcgaghhbkdcC2BDgAfXd2/kiqvdhhofFGw5p905roMYdr1kRyn1elTgOjT6x1w==
+"@vuelidate/validators@^2.0.0-alpha.4":
+  version "2.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@vuelidate/validators/-/validators-2.0.0-alpha.4.tgz#cc90d4b37225abdfaa3d49e010b9ee52c4858882"
+  integrity sha512-VqFBZJr4RqcEKIGpAbgFahhs5lm97l16N2hLupfQQRJpUrzTbdNGoXOD4TNexvUFJ/7qOI0aUY5Tcwtzj3AESA==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -2848,6 +2850,11 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   integrity sha1-w9RaizT9cwYxoRCoolIGgrMdWn8=
   dependencies:
     delayed-stream "~1.0.0"
+
+commander@*:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-6.2.0.tgz#b990bfb8ac030aedc6d11bc04d1488ffef56db75"
+  integrity sha512-zP4jEKbe8SHzKJYQmq8Y9gYjtO/POJLgIdKgV7B9qNmABVFVc+ctqSX6iXh4mCpJfRBOabiZ2YKPg8ciDw6C+Q==
 
 commander@2.17.x:
   version "2.17.1"
@@ -6221,6 +6228,13 @@ mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+mockjs@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/mockjs/-/mockjs-1.1.0.tgz#e6a0c378e91906dbaff20911cc0273b3c7d75b06"
+  integrity sha512-eQsKcWzIaZzEZ07NuEyO4Nw65g0hdWAyurVol1IPl1gahRwY+svqzfgfey8U8dahLwG44d6/RwEzuK52rSa/JQ==
+  dependencies:
+    commander "*"
+
 moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
@@ -9187,6 +9201,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
+
+vue-demi@latest:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.4.1.tgz#2261b8afe57b99ef4a6ee82a7bd2e6fe471bdcde"
+  integrity sha512-3xxnqY426eMKhmYdNygYwOvuaJlrgP+aSZLiD5GdCF7cBsMNmUZM7g3RL0NqIuY19WB5CCzuFbi/xW1Nd053xw==
 
 vue-eslint-parser@^7.1.1:
   version "7.1.1"

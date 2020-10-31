@@ -1,6 +1,7 @@
 const state = () => {
   return {
-    count: 1,
+    userInfo: {},
+    loadingAPIs: [],
   };
 };
 

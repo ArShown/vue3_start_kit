@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>user - album</div>
 </template>
 
 <script>

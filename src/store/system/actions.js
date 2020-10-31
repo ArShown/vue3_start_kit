@@ -1,3 +1,22 @@
-const actions = {};
+import axios from "@/utils/axios-instance";
+import $router from "@/router";
+import swal from "sweetalert2";
+import { LOGIN, LOGOUT } from "@/constants/actions";
+import { SET_USER_INFO, CLEAR_USER_INFO } from "@/constants/mutations";
+
+const actions = {
+  async [LOGIN]({ commit }) {
+    const res = await axios("/login");
+    if (res.code === 0) {
+      commit(SET_USER_INFO, res.data);
+      $router.push({ name: "default-path" });
+    }
+  },
+  [LOGOUT]({ commit }) {
+    commit(CLEAR_USER_INFO);
+    swal.fire("登出成功");
+    $router.push({ name: "/login" });
+  },
+};
 
 export default actions;
