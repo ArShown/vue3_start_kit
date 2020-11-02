@@ -2,6 +2,7 @@ const state = () => {
   return {
     userInfo: {},
     loadingAPIs: [],
+    breadcrumb: [],
   };
 };
 

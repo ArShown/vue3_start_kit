@@ -34,9 +34,9 @@
         <!-- breadcrumb -->
         <TheBreadcrumb />
       </div>
-      <div class="p-4">
-        <slot></slot>
-      </div>
+      <section class="relative p-4">
+        <slot />
+      </section>
     </div>
   </div>
 </template>

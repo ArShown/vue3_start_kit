@@ -1,6 +1,10 @@
 <template>
   <component :is="layout">
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <transition name="fade-transform">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </component>
   <TheLoadingCover />
 </template>
@@ -13,6 +17,7 @@ import { isNil, defaultTo, path } from "ramda";
 export default {
   setup() {
     const $store = useStore();
+    const key = computed(() => $store.state.route.path);
     const layout = computed(() => {
       /* 一開始都是 undefined */
       if (isNil($store.state.route.path)) return null;
@@ -24,6 +29,7 @@ export default {
     });
 
     return {
+      key,
       layout,
     };
   },

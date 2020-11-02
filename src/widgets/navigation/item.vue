@@ -60,7 +60,7 @@
 <script>
 import { useRouter } from "vue-router";
 import { reactive, computed } from "vue";
-import ChevronRight from "./icons/chevron-right";
+import ChevronRight from "@/widgets/icons/chevron-right";
 
 export default {
   name: "NavigationItem",
@@ -95,7 +95,8 @@ export default {
       const hasPath = "path" in props.model;
       if (child.isExist || !hasPath) e.preventDefault();
       props.onOpen(props.model.id);
-      hasPath && $router.push(props.model.path);
+      !child.isExist && hasPath && $router.push(props.model.path);
+      "event" in props.model && props.model.event.call(this);
     };
     const onChildOpen = (id) => {
       child.menu = props.computeLogic(id)(child.menu);

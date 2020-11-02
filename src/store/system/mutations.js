@@ -4,6 +4,8 @@ import {
   ADD_LOADING_API_QUEUE,
   DEL_LOADING_API_QUEUE,
   CLEAR_LOADING_API_QUEUE,
+  SET_BREADCRUMB,
+  CLEAR_BREADCRUMB,
 } from "@/constants/mutations";
 import { append, reject, equals } from "ramda";
 
@@ -22,6 +24,12 @@ const mutations = {
   },
   [CLEAR_LOADING_API_QUEUE](state) {
     state.loadingAPIs = [];
+  },
+  [SET_BREADCRUMB](state, list) {
+    state.breadcrumb = list;
+  },
+  [CLEAR_BREADCRUMB](state) {
+    state.breadcrumb = [];
   },
 };
 

@@ -9,12 +9,15 @@ import {
   forEach,
   has,
   includes,
+  defaultTo,
+  path,
 } from "ramda";
 import pages from "./pages";
 import store from "./store";
+import { CLEAR_BREADCRUMB, SET_BREADCRUMB } from "@/constants/mutations";
 
 const options = {
-  defaultPath: "/home",
+  defaultPath: "/dashboard",
   layouts: {
     login: ["/login"],
   },
@@ -77,16 +80,16 @@ const exceptAuthPaths = ["/login", "/404"];
 router.beforeResolve(async (to, from, next) => {
   /* 要身份驗證的頁面 */
   if (!includes(to.path, exceptAuthPaths)) {
-    // store.commit(CLEAR_BREADCRUMB);
+    store.commit(CLEAR_BREADCRUMB);
     /* 沒有登入就導向登入頁 */
     if (!store.getters.isLogin) {
       next({ name: "/login" });
       return false;
     } else {
-      // const breadcrumb = defaultTo([])(
-      //   path(["matched", 0, "components", "default", "breadcrumb"], to)
-      // );
-      // store.commit(SET_BREADCRUMB, breadcrumb);
+      const breadcrumb = defaultTo([])(
+        path(["matched", 0, "components", "default", "breadcrumb"], to)
+      );
+      store.commit(SET_BREADCRUMB, breadcrumb);
     }
   }
   next();
