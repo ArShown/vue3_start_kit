@@ -12,14 +12,7 @@
       >
         <div
           class="relative font-light flex items-center h-16 leading-4 bg-gray-800 transition duration-300"
-          :class="{
-            [`pl-${paddingRange[level]}`]: true,
-            'bg-gray-900': !isRoot,
-            'hover:bg-opacity-75': !isRoot,
-            'hover:bg-black': !isRoot,
-            'hover:bg-opacity-50': isRoot,
-            'hover:bg-gray-900': isRoot,
-          }"
+          :class="[paddingRange, bgEffects]"
         >
           <i class="w-4 h-4 mr-4" v-if="Icon">
             <Icon />
@@ -101,12 +94,24 @@ export default {
     const onChildOpen = (id) => {
       child.menu = props.computeLogic(id)(child.menu);
     };
+    const isRoot = props.level === 1;
 
     return {
       child,
       Icon,
-      paddingRange: [0, 4, 10, 16, 24],
-      isRoot: props.level === 1,
+      paddingRange: {
+        "pl-4": props.level === 1,
+        "pl-10": props.level === 2,
+        "pl-16": props.level === 3,
+        "pl-24": props.level === 4,
+      },
+      bgEffects: {
+        "bg-gray-900": !isRoot,
+        "hover:bg-opacity-75": !isRoot,
+        "hover:bg-black": !isRoot,
+        "hover:bg-opacity-50": isRoot,
+        "hover:bg-gray-900": isRoot,
+      },
       linkHandler,
       isOpen,
       isActive,
