@@ -31,8 +31,8 @@
         </div>
         <ul
           v-if="child.isExist"
-          v-show="isOpen"
           class="relative border-none list-none border-r m-0 pl-0 bg-gray-900 overflow-hidden transition-all duration-200"
+          :style="`max-height: ${childHeight}rem`"
         >
           <NavigationItem
             v-for="childItem in child.menu"
@@ -40,9 +40,7 @@
             :model="childItem"
             :level="level + 1"
             :currentPath="currentPath"
-            :onOpen="onChildOpen"
-            :transferLogic="transferLogic"
-            :computeLogic="computeLogic"
+            :onOpen="onOpen"
           />
         </ul>
       </li>
@@ -52,7 +50,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { reactive, computed, watch } from "vue";
+import { reactive, computed } from "vue";
 import ChevronRight from "@/widgets/icons/chevron-right";
 
 export default {
@@ -65,20 +63,16 @@ export default {
     model: Object,
     currentPath: String,
     onOpen: Function,
-    transferLogic: Function,
-    computeLogic: Function,
   },
   components: { ChevronRight },
   setup(props) {
     const $router = useRouter();
     const isOpen = computed(() => props.model.isOpen);
+    const childHeight = computed(() => props.model.childCount * 4);
     const isActive = computed(() => props.model.path === props.currentPath);
     const child = reactive({
-      isExist: "child" in props.model,
-      menu:
-        "child" in props.model
-          ? props.transferLogic(props.currentPath)(props.model.child)
-          : [],
+      isExist: computed(() => "child" in props.model),
+      menu: computed(() => ("child" in props.model ? props.model.child : [])),
     });
     const Icon = computed(() =>
       "icon" in props.model
@@ -93,18 +87,8 @@ export default {
       !child.isExist && hasPath && $router.push(props.model.path);
       "event" in props.model && props.model.event.call(this);
     };
-    const onChildOpen = (id) => {
-      child.menu = props.computeLogic(id)(child.menu);
-    };
-    const isRoot = props.level === 1;
 
-    watch(
-      () => props.currentPath,
-      (path) => {
-        child.menu =
-          "child" in props.model ? props.transferLogic(path)(child.menu) : [];
-      }
-    );
+    const isRoot = props.level === 1;
 
     return {
       child,
@@ -124,8 +108,8 @@ export default {
       },
       linkHandler,
       isOpen,
+      childHeight,
       isActive,
-      onChildOpen,
     };
   },
 };

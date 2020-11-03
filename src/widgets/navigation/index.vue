@@ -7,8 +7,6 @@
       :key="item.id"
       :model="item"
       :onOpen="onOpen"
-      :transferLogic="transferLogic"
-      :computeLogic="computeLogic"
       :currentPath="currentPath"
     />
   </ul>
@@ -19,17 +17,73 @@ import { useRoute } from "vue-router";
 import { map } from "ramda";
 import NavigationItem from "./item";
 
-const computeLogic = (target) =>
-  map((item) => {
-    if (item.id === target) item.isOpen = !item.isOpen;
-    else item.isOpen = false;
+const hasChildOpenTarget = (target) => (child) => {
+  for (let idx in child) {
+    const item = child[idx];
+    if (
+      item.id === target ||
+      ("child" in item && hasChildOpenTarget(target)(item.child))
+    )
+      return true;
+  }
+  return false;
+};
+
+const getChildrenCountById = (id) => (child, count = 0) => {
+  for (let idx in child) {
+    const item = child[idx];
+    if (item.id === id) {
+      count += child.length;
+      break;
+    }
     if ("child" in item)
-      item.child = map((child) => {
-        child.isOpen = false;
-        return child;
-      }, item.child);
+      if (hasChildOpenTarget(id)(item.child)) {
+        count += getChildrenCountById(id)(item.child, child.length);
+        break;
+      }
+  }
+  return count;
+};
+
+const computeLogic = (target) => {
+  const assocInit = map((item) => {
+    item.isOpen = false;
+    item.childCount = 0;
+    if ("child" in item) item.child = assocInit(item.child);
     return item;
   });
+
+  const assocAttrs = map((item) => {
+    const hasChild = "child" in item;
+
+    if (item.id === target) {
+      item.isOpen = !item.isOpen;
+      if (item.isOpen) {
+        item.childCount = hasChild ? item.child.length : 0;
+        if (hasChild) item.child = assocAttrs(item.child);
+      } else {
+        item.childCount = 0;
+        if (hasChild) item.child = assocInit(item.child);
+      }
+      return item;
+    }
+
+    if (hasChild && hasChildOpenTarget(target)(item.child)) {
+      item.isOpen = true;
+      item.childCount += getChildrenCountById(target)(item.child);
+      item.child = assocAttrs(item.child);
+      return item;
+    }
+
+    item.isOpen = false;
+    item.childCount = 0;
+    if (hasChild) item.child = assocInit(item.child);
+
+    return item;
+  });
+
+  return assocAttrs;
+};
 
 const hasChildCurrentRoute = (currentPath) => (child) => {
   for (let idx in child) {
@@ -43,14 +97,38 @@ const hasChildCurrentRoute = (currentPath) => (child) => {
   return false;
 };
 
+const getChildrenCount = (currentPath) => (child, count = 0) => {
+  for (let idx in child) {
+    const item = child[idx];
+    if (item.path === currentPath) {
+      count += child.length;
+      break;
+    }
+    if ("child" in item)
+      if (hasChildCurrentRoute(currentPath)(item.child)) {
+        count += getChildrenCount(currentPath)(item.child, child.length);
+        break;
+      }
+  }
+  return count;
+};
+
 const transferLogic = (currentPath) => {
   const validListOpen = hasChildCurrentRoute(currentPath);
-  return (menu) =>
-    map((item) => {
-      if ("child" in item) item.isOpen = validListOpen(item.child);
-      else item.isOpen = false;
-      return item;
-    })(menu);
+  const childCount = getChildrenCount(currentPath);
+
+  const assocAttrs = map((item) => {
+    item.isOpen = false;
+    item.childCount = 0;
+    if ("child" in item) {
+      item.isOpen = validListOpen(item.child);
+      item.childCount = childCount(item.child);
+      item.child = assocAttrs(item.child);
+    }
+    return item;
+  });
+
+  return assocAttrs;
 };
 
 export default {
@@ -78,8 +156,6 @@ export default {
       currentPath,
       model,
       onOpen,
-      transferLogic,
-      computeLogic,
     };
   },
 };
