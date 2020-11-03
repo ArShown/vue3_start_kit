@@ -14,7 +14,7 @@
   </ul>
 </template>
 <script>
-import { reactive, computed } from "vue";
+import { reactive, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { map } from "ramda";
 import NavigationItem from "./item";
@@ -32,16 +32,15 @@ const computeLogic = (target) =>
   });
 
 const hasChildCurrentRoute = (currentPath) => (child) => {
-  let flag = false;
   for (let idx in child) {
     const item = child[idx];
-    if (item.path === currentPath) {
-      flag = true;
-      break;
-    } else if ("child" in item)
-      flag = hasChildCurrentRoute(currentPath)(item.child);
+    if (
+      item.path === currentPath ||
+      ("child" in item && hasChildCurrentRoute(currentPath)(item.child))
+    )
+      return true;
   }
-  return flag;
+  return false;
 };
 
 const transferLogic = (currentPath) => {
@@ -63,20 +62,23 @@ export default {
   setup(props) {
     const $route = useRoute();
     const currentPath = computed(() => $route.path);
-    const bindTransferLogic = transferLogic(currentPath.value);
 
     const model = reactive({
-      menu: bindTransferLogic(props.menu),
+      menu: transferLogic(currentPath.value)(props.menu),
     });
     const onOpen = (id) => {
       model.menu = computeLogic(id)(model.menu);
     };
 
+    watch(currentPath, (path) => {
+      model.menu = transferLogic(path)(model.menu);
+    });
+
     return {
       currentPath,
       model,
       onOpen,
-      transferLogic: bindTransferLogic,
+      transferLogic,
       computeLogic,
     };
   },

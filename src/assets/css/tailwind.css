@@ -10,6 +10,7 @@ html {
 body {
   min-height: 100% !important;
   height: 100% !important;
+  @apply .bg-gray-800;
 }
 
 #app {

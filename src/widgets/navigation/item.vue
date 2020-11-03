@@ -52,7 +52,7 @@
 
 <script>
 import { useRouter } from "vue-router";
-import { reactive, computed } from "vue";
+import { reactive, computed, watch } from "vue";
 import ChevronRight from "@/widgets/icons/chevron-right";
 
 export default {
@@ -76,7 +76,9 @@ export default {
     const child = reactive({
       isExist: "child" in props.model,
       menu:
-        "child" in props.model ? props.transferLogic(props.model.child) : [],
+        "child" in props.model
+          ? props.transferLogic(props.currentPath)(props.model.child)
+          : [],
     });
     const Icon = computed(() =>
       "icon" in props.model
@@ -95,6 +97,14 @@ export default {
       child.menu = props.computeLogic(id)(child.menu);
     };
     const isRoot = props.level === 1;
+
+    watch(
+      () => props.currentPath,
+      (path) => {
+        child.menu =
+          "child" in props.model ? props.transferLogic(path)(child.menu) : [];
+      }
+    );
 
     return {
       child,

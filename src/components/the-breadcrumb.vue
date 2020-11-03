@@ -1,50 +1,51 @@
 <template>
-  <div class="text-sm text-gray-500">
-    <span class="float-left">
-      <router-link
-        to="/dashboard"
-        :class="{
-          'text-black': hasChild,
-          'cursor-pointer': hasChild,
-          'hover:text-blue-400': hasChild,
-        }"
-      >
-        Dashboard
-      </router-link>
-      <span
-        class="mx-2"
-        :class="{
-          visible: hasChild,
-          invisible: !hasChild,
-        }"
-        >/</span
-      >
-    </span>
-    <transition-group name="breadcrumb" :duration="30000">
-      <span
-        class="float-left"
-        v-for="(route, idx) in breadcrumb"
-        :key="route.path"
-      >
+  <div class="text-sm text-gray-300">
+    <span>
+      <span class="float-left">
         <router-link
-          :to="route.path"
+          to="/dashboard"
           :class="{
-            'text-black': hasNext(idx),
-            'cursor-pointer': hasNext(idx),
-            'hover:text-blue-400': hasNext(idx),
+            'text-white': hasChild,
+            'hover:text-blue-800': hasChild,
           }"
-          >{{ route.title }}
+        >
+          Dashboard
         </router-link>
         <span
           class="mx-2"
           :class="{
-            visible: hasNext(idx),
-            invisible: !hasNext(idx),
+            visible: hasChild,
+            invisible: !hasChild,
           }"
           >/</span
         >
       </span>
-    </transition-group>
+      <transition-group name="breadcrumb">
+        <span
+          class="inline-block"
+          v-for="(route, idx) in breadcrumb"
+          :key="route.path"
+        >
+          <router-link
+            :to="route.path"
+            :class="{
+              'text-white': hasNext(idx),
+              'cursor-default': !hasNext(idx),
+              'hover:text-blue-800': hasNext(idx),
+            }"
+            >{{ route.title }}
+          </router-link>
+          <span
+            class="mx-2"
+            :class="{
+              visible: hasNext(idx),
+              invisible: !hasNext(idx),
+            }"
+            >/</span
+          >
+        </span>
+      </transition-group>
+    </span>
     <div class="clear-both"></div>
   </div>
 </template>

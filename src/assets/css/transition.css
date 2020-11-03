@@ -37,6 +37,7 @@
 
 .breadcrumb-leave-active {
   position: absolute;
+  left: auto;
 }
 
 .breadcrumb-enter-active {

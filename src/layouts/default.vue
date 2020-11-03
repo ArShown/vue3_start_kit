@@ -15,26 +15,26 @@
       @click.prevent="triggerOpen"
     ></div>
     <div
-      class="relative min-h-full transform transition-all duration-200 bg-white"
+      class="relative h-full transform transition-all duration-200 flex flex-col"
       :class="{
         'ml-56': !isMobile && isOpen,
       }"
     >
       <div
-        class="h-12 shadow-sm border-b border-gray-500 border-opacity-25 flex items-center"
+        class="flex-shrink-0 flex-grow-0 h-12 shadow-sm border-b border-gray-500 border-opacity-25 flex items-center bg-blue-500"
       >
         <div
           class="flex-shrink-0 flex-grow-0 w-12 h-full flex items-center justify-center cursor-pointer"
           @click.prevent="triggerOpen"
         >
-          <i class="h-4 w-4">
+          <i class="h-4 w-4 text-white">
             <component :is="icon" />
           </i>
         </div>
         <!-- breadcrumb -->
         <TheBreadcrumb />
       </div>
-      <section class="relative p-4">
+      <section class="relative p-4 bg-white h-full overflow-auto">
         <slot />
       </section>
     </div>

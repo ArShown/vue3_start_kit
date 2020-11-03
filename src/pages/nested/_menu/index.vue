@@ -9,12 +9,12 @@ import { useStore } from "vuex";
 export default {
   breadcrumb: [
     {
-      path: "/nested",
+      path: "/nested/1",
       title: "Nested",
     },
     (state) => ({
       path: state.route.fullPath,
-      title: `Menu - ${state.route.params.menu}`,
+      title: `Menu - ${state.route.params.menu || 0}`,
     }),
   ],
   setup() {
