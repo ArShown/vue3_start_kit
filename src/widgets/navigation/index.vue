@@ -1,6 +1,6 @@
 <template>
   <ul
-    class="border-none h-full w-full border-r border-gray-600 list-none relative m-0 pl-0"
+    class="border-none w-full border-r border-gray-600 list-none relative m-0 pl-0"
   >
     <NavigationItem
       v-for="item in model.menu"

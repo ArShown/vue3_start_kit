@@ -1,12 +1,12 @@
 <template>
-  <div class="relative h-full overflow-hidden">
+  <div class="relative h-full overflow-x-hidden overflow-y-scroll">
     <div class="p-4 flex items-center text-white">
       <div class="h-10 w-10 -ml-1">
         <UserIcon />
       </div>
       <div class="ml-3 leading-6 font-semibold">{{ name }}</div>
     </div>
-    <div class="overflow-x-hidden overflow-y-scroll h-full">
+    <div class="h-auto">
       <div class="text-xs px-4 pt-4 text-gray-600">MAIN</div>
       <Navigation :menu="menu" />
     </div>
