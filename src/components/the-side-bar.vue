@@ -1,5 +1,5 @@
 <template>
-  <div class="relative h-full overflow-x-hidden overflow-y-scroll">
+  <Scrollbar>
     <div class="p-4 flex items-center text-white">
       <div class="h-10 w-10 -ml-1">
         <UserIcon />
@@ -10,19 +10,20 @@
       <div class="text-xs px-4 pt-4 text-gray-600">MAIN</div>
       <Navigation :menu="menu" />
     </div>
-  </div>
+  </Scrollbar>
 </template>
 
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
 import { LOGOUT } from "@/constants/actions";
+import Scrollbar from "@/widgets/scrollbar";
 import Navigation from "@/widgets/navigation";
 import UserIcon from "@/widgets/icons/user-circle";
 
 export default {
   name: "TheSideBar",
-  components: { Navigation, UserIcon },
+  components: { Scrollbar, Navigation, UserIcon },
   setup() {
     const $store = useStore();
     const name = computed(() => $store.state.system.userInfo.name);
