@@ -1,10 +1,11 @@
 {
   "name": "vue3_start_kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
     "prettier": "prettier --write **/*.{vue,js,css}"
   },

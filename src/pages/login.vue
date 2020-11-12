@@ -6,6 +6,7 @@
         class="relative z-10 w-full leading-8 px-2 py-1 outline-none rounded border-2 border-white"
         :class="{ 'border-red-500': isAccountInvalid }"
         v-model="form.account"
+        autocomplete="off"
         placeholder="username"
       />
       <span
@@ -22,6 +23,7 @@
         class="relative z-10 w-full leading-8 px-2 py-1 outline-none rounded border-2 border-white"
         :class="{ 'border-red-500': isPasswordInvalid }"
         v-model="form.password"
+        autocomplete="off"
         placeholder="password"
       />
       <span
