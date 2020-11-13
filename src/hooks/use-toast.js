@@ -18,7 +18,7 @@ export const install = {
     transition: "Vue-Toastification__bounce",
     maxToasts: 6,
     closeOnClick: true,
-    position: POSITION.BOTTOM_RIGHT,
+    position: POSITION.TOP_RIGHT,
     newestOnTop: true,
     hideProgressBar: true,
     timeout: 5000,

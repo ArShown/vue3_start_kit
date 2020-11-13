@@ -8,7 +8,7 @@ import plugins from "./plugins";
 import store from "./store";
 import hooks from "./hooks";
 import "@/assets/css/tailwind.css";
-import "@/mock";
+import "../mock";
 
 const app = createApp(App);
 app.use(plugins);

@@ -3,6 +3,7 @@ const state = () => {
     userInfo: {},
     loadingAPIs: [],
     breadcrumb: [],
+    showWelcomeToast: false,
   };
 };
 

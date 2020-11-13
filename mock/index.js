@@ -5,7 +5,7 @@ let models = [];
 
 files.keys().forEach((key) => {
   if (key === "./index.js") return;
-  const data = require(`@/mock/${path.normalize(key)}`).default;
+  const data = require(`./${path.normalize(key)}`).default;
   models.push({
     filename: path.normalize(key).replace(".js", ""),
     data,

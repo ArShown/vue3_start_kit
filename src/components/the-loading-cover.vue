@@ -2,15 +2,12 @@
   <transition name="fade">
     <div
       v-if="hasLoadingAPIs"
-      class="fixed inset-0 bg-gray-100 bg-opacity-50 flex justify-center items-center flex-col"
+      class="fixed right-0 top-0 flex justify-center items-center flex-col p-4"
     >
-      <h3 class="animate-pulse text-base mb-3">Loading...</h3>
-      <button
-        class="bg-white hover:bg-gray-100 text-gray-700 py-2 px-4 border border-gray-400 rounded focus:outline-none"
-        @click="onClose"
-      >
-        關 閉
-      </button>
+      <h3
+        class="animate-spin border-2 border-gray-100 w-4 h-4 rounded-full"
+        style="border-top-color: transparent"
+      ></h3>
     </div>
   </transition>
 </template>
@@ -18,20 +15,15 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { CLEAR_LOADING_API_QUEUE } from "@/constants/mutations";
 
 export default {
   setup() {
     const $store = useStore();
-    const onClose = () => {
-      $store.commit(CLEAR_LOADING_API_QUEUE);
-    };
     const hasLoadingAPIs = computed(
       () => $store.state.system.loadingAPIs.length > 0
     );
     return {
       hasLoadingAPIs,
-      onClose,
     };
   },
 };

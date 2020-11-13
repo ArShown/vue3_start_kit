@@ -1,9 +1,9 @@
 import {
   SET_USER_INFO,
   CLEAR_USER_INFO,
+  SET_WELCOME_TOAST_DISPLAY,
   ADD_LOADING_API_QUEUE,
   DEL_LOADING_API_QUEUE,
-  CLEAR_LOADING_API_QUEUE,
   SET_BREADCRUMB,
   CLEAR_BREADCRUMB,
 } from "@/constants/mutations";
@@ -16,14 +16,14 @@ const mutations = {
   [CLEAR_USER_INFO](state) {
     state.userInfo = {};
   },
+  [SET_WELCOME_TOAST_DISPLAY](state, flag) {
+    state.showWelcomeToast = flag;
+  },
   [ADD_LOADING_API_QUEUE](state, apiDesc) {
     state.loadingAPIs = append(apiDesc, state.loadingAPIs);
   },
   [DEL_LOADING_API_QUEUE](state, apiDesc) {
     state.loadingAPIs = reject(equals(apiDesc), state.loadingAPIs);
-  },
-  [CLEAR_LOADING_API_QUEUE](state) {
-    state.loadingAPIs = [];
   },
   [SET_BREADCRUMB](state, list) {
     state.breadcrumb = list;

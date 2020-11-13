@@ -42,15 +42,18 @@
 </template>
 
 <script>
-import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import IndentDecrease from "@/widgets/icons/indent-decrease";
 import IndentIncrease from "@/widgets/icons/indent-increase";
+import useToast from "@/hooks/use-toast";
+import { SET_WELCOME_TOAST_DISPLAY } from "@/constants/mutations";
 
 export default {
   components: { IndentDecrease, IndentIncrease },
   setup() {
-    const $route = useRoute();
+    const $store = useStore();
+    const toast = useToast();
     const isMobile = ref(false);
     const isOpen = ref(true);
     const triggerOpen = () => {
@@ -59,6 +62,9 @@ export default {
     const icon = computed(() =>
       isOpen.value ? "IndentDecrease" : "IndentIncrease"
     );
+    const isShowToast = computed(() => $store.state.system.showWelcomeToast);
+    const userName = computed(() => $store.state.system.userInfo.name);
+
     const resizeHandler = () => {
       if (window.innerWidth <= 640) {
         isMobile.value = true;
@@ -70,11 +76,16 @@ export default {
     };
     onMounted(() => {
       watch(
-        () => $route.path,
+        () => $store.state.route.path,
         () => {
           if (isMobile.value && isOpen.value) isOpen.value = false;
         }
       );
+
+      if (isShowToast.value) {
+        toast.success(`${userName.value}，您好！`);
+        $store.commit(SET_WELCOME_TOAST_DISPLAY, false);
+      }
 
       resizeHandler();
       window.addEventListener("resize", resizeHandler);

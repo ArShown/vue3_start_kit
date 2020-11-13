@@ -107,6 +107,12 @@ export default {
       },
       {
         id: "3",
+        path: "/table",
+        title: "Table",
+        icon: "table",
+      },
+      {
+        id: "98",
         path: "/404",
         title: "Error Page",
         icon: "exclamation",
