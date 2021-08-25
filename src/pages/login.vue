@@ -49,9 +49,10 @@
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 import useVuelidate, { required } from "@/hooks/use-vuelidate";
-import { LOGIN } from "@/constants/actions";
 
 export default {
+  needAuth: false,
+  layout: "layout-login",
   name: "Login",
   setup() {
     const form = reactive({ account: "admin", password: "anything" });
@@ -85,7 +86,7 @@ export default {
     const loginHandler = () => {
       $v.value.$touch();
       if ($v.value.$invalid) return false;
-      $store.dispatch(LOGIN);
+      $store.dispatch("auth/login");
     };
 
     return {

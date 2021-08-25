@@ -6,7 +6,7 @@
         '-translate-x-full': !isOpen,
       }"
     >
-      <TheSideBar />
+      <the-side-bar />
     </div>
     <div
       v-if="isMobile"
@@ -32,7 +32,7 @@
           </i>
         </div>
         <!-- breadcrumb -->
-        <TheBreadcrumb />
+        <the-breadcrumb />
       </div>
       <section class="relative p-4 bg-white h-full overflow-auto">
         <slot />
@@ -47,7 +47,6 @@ import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import IndentDecrease from "@/widgets/icons/indent-decrease";
 import IndentIncrease from "@/widgets/icons/indent-increase";
 import useToast from "@/hooks/use-toast";
-import { SET_WELCOME_TOAST_DISPLAY } from "@/constants/mutations";
 
 export default {
   components: { IndentDecrease, IndentIncrease },
@@ -62,8 +61,8 @@ export default {
     const icon = computed(() =>
       isOpen.value ? "IndentDecrease" : "IndentIncrease"
     );
-    const isShowToast = computed(() => $store.state.system.showWelcomeToast);
-    const userName = computed(() => $store.state.system.userInfo.name);
+    const isShowToast = computed(() => $store.state.app.showWelcomeToast);
+    const userName = computed(() => $store.state.auth.userInfo.name);
 
     const resizeHandler = () => {
       if (window.innerWidth <= 640) {
@@ -84,7 +83,7 @@ export default {
 
       if (isShowToast.value) {
         toast.success(`${userName.value}，您好！`);
-        $store.commit(SET_WELCOME_TOAST_DISPLAY, false);
+        $store.commit("app/set/welcome/toast", false);
       }
 
       resizeHandler();

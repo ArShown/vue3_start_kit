@@ -63,7 +63,7 @@ export default {
       return map((bread) => {
         if (is(Function, bread)) bread = bread($store.state);
         return bread;
-      })($store.state.system.breadcrumb);
+      })($store.state.app.breadcrumb);
     });
     const hasChild = computed(() => breadcrumb.value.length > 0);
     const hasNext = computed(() => (idx) => idx < breadcrumb.value.length - 1);

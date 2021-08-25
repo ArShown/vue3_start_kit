@@ -1,21 +1,15 @@
 import { createApp } from "vue";
 import { sync } from "vuex-router-sync";
 import App from "./App";
-import components from "./components";
-import router from "./router";
-import layouts from "./layouts";
-import plugins from "./plugins";
+import build from "./_app";
 import store from "./store";
-import hooks from "./hooks";
+import router from "./router";
 import "@/assets/css/tailwind.css";
 import "../mock";
 
 const app = createApp(App);
-app.use(plugins);
-app.use(hooks);
-app.use(components);
-app.use(layouts);
-app.use(router);
+build(app);
 app.use(store);
+app.use(router);
 sync(store, router);
 app.mount("#app");

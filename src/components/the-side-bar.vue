@@ -16,7 +16,6 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { LOGOUT } from "@/constants/actions";
 import Scrollbar from "@/widgets/scrollbar";
 import Navigation from "@/widgets/navigation";
 import UserIcon from "@/widgets/icons/user-circle";
@@ -26,7 +25,7 @@ export default {
   components: { Scrollbar, Navigation, UserIcon },
   setup() {
     const $store = useStore();
-    const name = computed(() => $store.state.system.userInfo.name);
+    const name = computed(() => $store.state.auth.userInfo.name);
     const menu = [
       {
         id: "1",
@@ -121,7 +120,7 @@ export default {
         id: "99",
         title: "Logout",
         icon: "logout",
-        event: () => $store.dispatch(LOGOUT),
+        event: () => $store.dispatch("auth/logout"),
       },
     ];
 

@@ -1,8 +1,7 @@
 const path = require("path");
-const files = require.context(".", true, /\.vue$/);
+const files = require.context("../pages", true, /\.vue$/);
 const modules = [];
 files.keys().forEach((key) => {
-  if (key === "./index.js") return;
   const name = path.normalize(key).toLowerCase().replace(".vue", "");
   let currentPath = "/" + name;
   /* /index => / */
@@ -13,6 +12,7 @@ files.keys().forEach((key) => {
   modules.push({
     path: currentPath,
     name: currentPath,
+    meta: { layout: files(key).default.layout || "layout-default" },
     component: () => import(`@/pages/${path.normalize(key)}`),
   });
 });

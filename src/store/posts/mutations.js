@@ -1,8 +1,7 @@
-import { SET_POSTS } from "@/constants/mutations";
 import { slice, min } from "ramda";
 
 const mutations = {
-  [SET_POSTS](state, { data, currentPage, totalAmount, perPage = 10 }) {
+  insert(state, { data, currentPage, totalAmount, perPage = 10 }) {
     const fromIndex = (currentPage - 1) * perPage;
     const toIndex = min(totalAmount, currentPage * perPage);
 

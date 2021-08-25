@@ -20,7 +20,7 @@ export default {
   setup() {
     const $store = useStore();
     const hasLoadingAPIs = computed(
-      () => $store.state.system.loadingAPIs.length > 0
+      () => $store.state.app.loadingAPIs.length > 0
     );
     return {
       hasLoadingAPIs,

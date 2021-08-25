@@ -6,7 +6,7 @@
       </transition>
     </router-view>
   </component>
-  <TheLoadingCover />
+  <the-loading-cover />
 </template>
 
 <script>
@@ -17,19 +17,17 @@ import { isNil, defaultTo, path } from "ramda";
 export default {
   setup() {
     const $store = useStore();
-    const key = computed(() => $store.state.route.path);
     const layout = computed(() => {
       /* 一開始都是 undefined */
       if (isNil($store.state.route.path)) return null;
       /* 拿設定的 layout，預設是 default-layout */
-      const currentLayout = defaultTo("default")(
+      const currentLayout = defaultTo("layout-error")(
         path(["meta", "layout"], $store.state.route)
       );
-      return `${currentLayout}-layout`;
+      return currentLayout;
     });
 
     return {
-      key,
       layout,
     };
   },

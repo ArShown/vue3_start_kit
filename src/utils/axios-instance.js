@@ -2,10 +2,6 @@
 import axios from "axios";
 import swal from "sweetalert2";
 import store from "@/store";
-import {
-  ADD_LOADING_API_QUEUE,
-  DEL_LOADING_API_QUEUE,
-} from "@/constants/mutations";
 
 const instance = axios.create();
 
@@ -42,7 +38,7 @@ instance.interceptors.request.use(
       config.data || ""
     );
     /* 存入請求佇列 */
-    store.commit(ADD_LOADING_API_QUEUE, _getAPIDesc(config));
+    store.commit("app/add/loadingApiQueue", _getAPIDesc(config));
     return config;
   },
   function (error) {
@@ -59,7 +55,7 @@ instance.interceptors.request.use(
 
 const requestCatcher = (config) => {
   instance.defaults._silent_ = false;
-  store.commit(DEL_LOADING_API_QUEUE, _getAPIDesc(config));
+  store.commit("app/remove/loadingApiQueue", _getAPIDesc(config));
 };
 
 /* 把回傳的結果往下丟 */

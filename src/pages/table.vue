@@ -37,7 +37,6 @@
 <script>
 import { useStore } from "vuex";
 import { computed, onMounted } from "vue";
-import { GET_POSTS } from "@/constants/actions";
 import Pagination from "@/widgets/pagination";
 
 export default {
@@ -54,11 +53,11 @@ export default {
     const posts = computed(() => $store.state.posts);
 
     onMounted(() => {
-      $store.dispatch(GET_POSTS, 1);
+      $store.dispatch("posts/read", 1);
     });
 
     const onClick = (page) => {
-      $store.dispatch(GET_POSTS, page);
+      $store.dispatch("posts/read", page);
     };
     return { posts, onClick };
   },
