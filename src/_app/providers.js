@@ -1,3 +1,4 @@
+// @ts-nocheck
 const files = import.meta.globEager("../services/*.js");
 
 const layouts = {

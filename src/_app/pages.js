@@ -1,3 +1,4 @@
+// @ts-nocheck
 const files = import.meta.glob("../pages/**/*.vue");
 const defaults = import.meta.globEager("../pages/**/*.vue");
 const modules = [];

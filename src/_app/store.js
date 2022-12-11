@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getNormalize, getFilename } from "./_rename";
 const files = import.meta.globEager("../store/**/*.js");
 import * as R from "ramda";

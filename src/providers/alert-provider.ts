@@ -15,12 +15,6 @@ export class AlertProvider {
       allowOutsideClick: false,
       allowEnterKey: false,
       allowEscapeKey: false,
-      didOpen(popup) {
-        const cancelBtn = popup.querySelector(".swal2-cancel");
-        const confirmBtn = popup.querySelector(".swal2-confirm");
-        confirmBtn.blur();
-        cancelBtn.blur();
-      },
     });
   }
 }

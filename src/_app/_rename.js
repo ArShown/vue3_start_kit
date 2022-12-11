@@ -25,7 +25,6 @@ const kebabToCamel = (kebabStr) => {
 /**
  *
  * @param {string} filePath
- * @param {string} ext
  *
  * ./path/to/my-file.ext
  * ->
@@ -39,7 +38,6 @@ const getNormalize = (filePath) => {
 /**
  *
  * @param {string} filePath
- * @param {string} ext
  *
  * ./path/to/my-file.ext
  * ->

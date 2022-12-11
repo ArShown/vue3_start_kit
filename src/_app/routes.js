@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { mergeDeepRight } from "ramda";
 import pages from "./pages";
 

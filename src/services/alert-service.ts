@@ -1,11 +1,14 @@
+//@ts-nocheck
 import { AlertProvider } from "@/providers/alert-provider";
 
 export class AlertService {
+  provider: AlertProvider;
+
   constructor() {
     this.provider = new AlertProvider();
   }
 
-  async toast(message) {
+  async toast(message: string) {
     return this.provider.fire({
       icon: "success",
       toast: true,

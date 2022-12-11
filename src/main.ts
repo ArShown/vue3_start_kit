@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { createApp } from "vue";
-import App from "@/App";
+import App from "@/App.vue";
 import layouts from "@/_app/layouts";
 import components from "@/_app/components";
 import providers from "@/_app/providers";

@@ -1,8 +1,9 @@
+//@ts-nocheck
 import { keys, forEach, reduce, isNil, isEmpty, assoc } from "ramda";
 
-const _computedRejectData = (payload, { rejectNil, rejectEmpty }) =>
+const _computedRejectData = (payload: any, { rejectNil, rejectEmpty }: any) =>
   reduce(
-    (result, key) => {
+    (result, key: any) => {
       const value = payload[key];
       if (rejectNil && isNil(value)) return result;
       if (rejectEmpty && isEmpty(value)) return result;
@@ -14,7 +15,7 @@ const _computedRejectData = (payload, { rejectNil, rejectEmpty }) =>
 
 export default {
   install: (register) => {
-    register.request.use((config) => {
+    register.request.use((config: any) => {
       const {
         isFormData = false,
         rejectNil = true,
@@ -36,15 +37,16 @@ export default {
 
         if (isFormData) {
           const formData = new FormData();
-          forEach((key) => {
+          const data: object = config.data;
+          forEach((key: string) => {
             if (config.data[key] instanceof Array) {
-              forEach((value) => {
+              forEach((value: any) => {
                 formData.append(`${key}[]`, value);
               }, config.data[key]);
             } else {
               formData.append(key, config.data[key]);
             }
-          }, keys(config.data));
+          }, keys(data));
           config.data = formData;
           config.headers.ContentType = "multipart/form-data";
         }

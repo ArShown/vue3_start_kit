@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Mock from "mockjs";
 const files = import.meta.globEager("./*.js");
 
@@ -7,7 +8,11 @@ for (let path in files) {
   for (let api of apis) {
     const { path, method, response } = api;
     const currentPath = path === "/" ? name : `${name}/${path}`;
-    Mock.mock(`/api/${currentPath}`, method, response);
+    Mock.mock(
+      `${import.meta.env.VITE_API_URL}/${currentPath}`,
+      method,
+      response
+    );
   }
 }
 

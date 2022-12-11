@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { createRouter, createWebHashHistory } from "vue-router";
 import createRoutes from "@/_app/routes";
 import store from "./store-service";
@@ -27,7 +28,7 @@ router.beforeResolve(async (to, from, next) => {
     return false;
   }
 
-  const { needAuth = true, breadcrumb = [] } = path(
+  const { needAuth = true, breadcrumb = [] }: any = path(
     ["matched", 0, "components", "default"],
     to
   );
@@ -48,7 +49,7 @@ router.beforeResolve(async (to, from, next) => {
   }
 
   /* 寫入麵包屑 */
-  if (breadcrumb.length > 0) store.commit("app/set/breadcrumb", breadcrumb);
+  store.commit("app/set/breadcrumb", breadcrumb);
 
   next();
 });

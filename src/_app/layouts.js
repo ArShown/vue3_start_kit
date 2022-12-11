@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getFilename } from "./_rename";
 const files = import.meta.globEager("../layouts/*.vue");
 const modules = [];
