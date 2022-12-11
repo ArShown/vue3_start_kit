@@ -6,18 +6,13 @@
     "postinstall": "husky install",
     "serve": "vite serve",
     "build": "vite build",
-    "build:dev": "vite build --mode development"
+    "build:dev": "vite build --mode development",
+    "lint-staged": "lint-staged"
   },
   "lint-staged": {
     "*.md": "prettier --write",
     "*.{js,vue,css}": "prettier --write",
     "*.{js,vue}": "eslint --fix"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
   },
   "dependencies": {
     "@vitejs/plugin-vue": "4.0.0",
