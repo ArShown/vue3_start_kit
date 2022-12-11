@@ -1,19 +1,14 @@
 import Mock from "mockjs";
-const path = require("path");
-const files = require.context(".", true, /\.js$/);
-let models = [];
+const files = import.meta.globEager("./*.js");
 
-files.keys().forEach((key) => {
-  if (key === "./index.js") return;
-  const data = require(`./${path.normalize(key)}`).default;
-  models.push({
-    filename: path.normalize(key).replace(".js", ""),
-    data,
-  });
-});
-
-models.forEach((model) => {
-  Mock.mock(`/api/${model.filename}`, "get", model.data);
-});
+for (let path in files) {
+  const name = path.replace("./", "").toLowerCase().replace(".js", "");
+  const apis = files[path].default;
+  for (let api of apis) {
+    const { path, method, response } = api;
+    const currentPath = path === "/" ? name : `${name}/${path}`;
+    Mock.mock(`/api/${currentPath}`, method, response);
+  }
+}
 
 export default Mock;

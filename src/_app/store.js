@@ -1,6 +1,6 @@
-const path = require("path");
-const R = require("ramda");
-const files = require.context("../store", true, /\.js$/);
+import { getNormalize, getFilename } from "./_rename";
+const files = import.meta.globEager("../store/**/*.js");
+import * as R from "ramda";
 let modules = {};
 
 const setMouduleTree = (keyList, key, value) => {
@@ -20,11 +20,15 @@ const setMouduleTree = (keyList, key, value) => {
   };
 };
 
-files.keys().forEach((key) => {
-  const filepaths = path.dirname(path.normalize(key)).toLowerCase().split("/");
-  const filename = path.basename(key, ".js");
-  const currentTree = setMouduleTree(filepaths, filename, files(key).default);
+for (let path in files) {
+  const [, , ...paths] = getNormalize(path).split("/");
+  const filepaths = [...paths, getFilename(path)];
+  const currentTree = setMouduleTree(
+    R.init(filepaths),
+    R.last(filepaths),
+    files[path].default
+  );
   modules = R.mergeDeepLeft(modules, currentTree);
-});
+}
 
 export default modules;

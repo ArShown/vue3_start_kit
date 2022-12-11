@@ -53,15 +53,17 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 import { map, is } from "ramda";
 
 export default {
   name: "TheBreadcrumb",
   setup() {
     const $store = useStore();
+    const route = useRoute();
     const breadcrumb = computed(() => {
       return map((bread) => {
-        if (is(Function, bread)) bread = bread($store.state);
+        if (is(Function, bread)) bread = bread($store.state, route);
         return bread;
       })($store.state.app.breadcrumb);
     });

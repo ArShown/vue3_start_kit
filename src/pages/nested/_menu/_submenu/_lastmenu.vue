@@ -8,7 +8,7 @@
 
 <script>
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
 export default {
   breadcrumb: [
@@ -16,24 +16,24 @@ export default {
       path: "/nested/1",
       title: "Nested",
     },
-    (state) => ({
-      path: `/nested/${state.route.params.menu}`,
-      title: `Menu - ${state.route.params.menu || 0}`,
+    (state, route) => ({
+      path: `/nested/${route.params.menu}`,
+      title: `Menu - ${route.params.menu || 0}`,
     }),
-    (state) => ({
-      path: `/nested/${state.route.params.menu}/${state.route.params.submenu}`,
-      title: `Submenu - ${state.route.params.submenu || 0}`,
+    (state, route) => ({
+      path: `/nested/${route.params.menu}/${route.params.submenu}`,
+      title: `Submenu - ${route.params.submenu || 0}`,
     }),
-    (state) => ({
-      path: state.route.fullPath,
-      title: `Last Menu - ${state.route.params.lastmenu || 0}`,
+    (state, route) => ({
+      path: route.fullPath,
+      title: `Last Menu - ${route.params.lastmenu || 0}`,
     }),
   ],
   setup() {
-    const $store = useStore();
-    const currentMenu = computed(() => $store.state.route.params.menu);
-    const currentSubmenu = computed(() => $store.state.route.params.submenu);
-    const currentLastMenu = computed(() => $store.state.route.params.lastmenu);
+    const route = useRoute();
+    const currentMenu = computed(() => route.params.menu);
+    const currentSubmenu = computed(() => route.params.submenu);
+    const currentLastMenu = computed(() => route.params.lastmenu);
     return {
       currentMenu,
       currentSubmenu,

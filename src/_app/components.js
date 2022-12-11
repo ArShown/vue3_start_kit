@@ -1,14 +1,17 @@
-const path = require("path");
-const files = require.context("../components", true, /\.vue$/);
+const files = import.meta.globEager("../components/**/*.vue");
 const modules = [];
 
-files.keys().forEach((key) => {
-  const filename = path.normalize(key).toLowerCase().replace(".vue", "");
+for (let path in files) {
+  const filename = path
+    .replace("../components/", "")
+    .toLowerCase()
+    .replace("/", ".")
+    .replace(".vue", "");
   modules.push({
     componentName: filename,
-    component: files(key).default,
+    component: files[path].default,
   });
-});
+}
 
 const components = {
   install: (app) => {

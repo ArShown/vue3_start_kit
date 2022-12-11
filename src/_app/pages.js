@@ -1,9 +1,9 @@
-const path = require("path");
-const files = require.context("../pages", true, /\.vue$/);
+const files = import.meta.glob("../pages/**/*.vue");
+const defaults = import.meta.globEager("../pages/**/*.vue");
 const modules = [];
-files.keys().forEach((key) => {
-  const name = path.normalize(key).toLowerCase().replace(".vue", "");
-  let currentPath = "/" + name;
+for (let path in files) {
+  const name = path.replace("../pages", "").toLowerCase().replace(".vue", "");
+  let currentPath = name;
   /* /index => / */
   currentPath = currentPath.replace(/\/index$/, "");
   /* /_id => /:id */
@@ -12,8 +12,11 @@ files.keys().forEach((key) => {
   modules.push({
     path: currentPath,
     name: currentPath,
-    meta: { layout: files(key).default.layout || "layout-default" },
-    component: () => import(`@/pages/${path.normalize(key)}`),
+    meta: {
+      layout: defaults[path].default.layout || "layout-default",
+    },
+    component: files[path],
   });
-});
+}
+
 export default modules;

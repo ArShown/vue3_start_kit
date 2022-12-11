@@ -1,14 +1,14 @@
-const path = require("path");
-const files = require.context("../layouts", true, /\.vue$/);
+import { getFilename } from "./_rename";
+const files = import.meta.globEager("../layouts/*.vue");
 const modules = [];
 
-files.keys().forEach((key) => {
-  const filename = path.normalize(key).toLowerCase().replace(".vue", "");
+for (let path in files) {
+  const filename = getFilename(path);
   modules.push({
     componentName: filename,
-    component: files(key).default,
+    component: files[path].default,
   });
-});
+}
 
 const layouts = {
   install: (app) => {

@@ -4,9 +4,6 @@ module.exports = {
     browser: true,
     node: true,
   },
-  parserOptions: {
-    parser: "babel-eslint",
-  },
   extends: [
     "plugin:vue/vue3-essential",
     "prettier",
@@ -22,6 +19,7 @@ module.exports = {
     "eslint:recommended",
   ],
   plugins: ["prettier"],
+  ignorePatterns: ["public/**/*"],
   // add your custom rules here
   rules: {},
 };

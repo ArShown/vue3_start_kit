@@ -5,7 +5,7 @@
     <div class="error_title">
       <span>4</span>
       <span class="w-32 h-32 animate-spin error_title__icon">
-        <QuestionIcon />
+        <icons.question-circle />
       </span>
       <span>4</span>
     </div>
@@ -18,11 +18,7 @@
 </template>
 
 <script>
-import QuestionIcon from "@/widgets/icons/question-circle";
-
-export default {
-  components: { QuestionIcon },
-};
+export default {};
 </script>
 
 <style scoped>

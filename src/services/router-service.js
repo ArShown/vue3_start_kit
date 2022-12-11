@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import createRoutes from "./_app/routes";
-import store from "./store";
+import createRoutes from "@/_app/routes";
+import store from "./store-service";
 import { path } from "ramda";
 
 const options = {
@@ -8,7 +8,9 @@ const options = {
 };
 
 const router = createRouter({
-  history: createWebHashHistory(process.env.BASE_URL),
+  history: createWebHashHistory(
+    import.meta.env.BASE_URL /* read from vite.config.js */
+  ),
   routes: createRoutes(options),
 });
 

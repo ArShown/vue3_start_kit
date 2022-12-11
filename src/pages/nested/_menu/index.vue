@@ -4,7 +4,7 @@
 
 <script>
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
 export default {
   breadcrumb: [
@@ -12,14 +12,14 @@ export default {
       path: "/nested/1",
       title: "Nested",
     },
-    (state) => ({
-      path: state.route.fullPath,
-      title: `Menu - ${state.route.params.menu || 0}`,
+    (state, route) => ({
+      path: route.fullPath,
+      title: `Menu - ${route.params.menu || 0}`,
     }),
   ],
   setup() {
-    const $store = useStore();
-    const currentMenu = computed(() => $store.state.route.params.menu);
+    const route = useRoute();
+    const currentMenu = computed(() => route.params.menu);
     return {
       currentMenu,
     };

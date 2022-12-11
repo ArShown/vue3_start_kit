@@ -12,11 +12,19 @@
       >
         <div
           class="relative font-light flex items-center h-16 leading-4 bg-gray-800 transition duration-300"
-          :class="[paddingRange, bgEffects]"
+          :class="{
+            'pl-4': level === 1,
+            'pl-10': level === 2,
+            'pl-16': level === 3,
+            'pl-24': level === 4,
+            'bg-gray-900': !isRoot,
+            'hover:bg-opacity-75': !isRoot,
+            'hover:bg-black': !isRoot,
+            'hover:bg-opacity-50': isRoot,
+            'hover:bg-gray-900': isRoot,
+          }"
         >
-          <i class="w-4 h-4 mr-4" v-if="Icon">
-            <Icon />
-          </i>
+          <component class="w-4 h-4 mr-4" v-if="icon" :is="icon" />
           <span class="font-light">{{ model.title }}</span>
           <i
             class="absolute right-0 test-xs w-4 h-4 transform transition-transform duration-200 origin-center"
@@ -26,7 +34,7 @@
               'rotate-90': isOpen,
             }"
           >
-            <ChevronRight />
+            <icons.chevron-right />
           </i>
         </div>
         <ul
@@ -51,7 +59,6 @@
 <script>
 import { useRouter } from "vue-router";
 import { reactive, computed } from "vue";
-import ChevronRight from "@/widgets/icons/chevron-right";
 
 export default {
   name: "NavigationItem",
@@ -64,7 +71,6 @@ export default {
     currentPath: String,
     onOpen: Function,
   },
-  components: { ChevronRight },
   setup(props) {
     const $router = useRouter();
     const isOpen = computed(() => props.model.isOpen);
@@ -74,11 +80,11 @@ export default {
       isExist: computed(() => "child" in props.model),
       menu: computed(() => ("child" in props.model ? props.model.child : [])),
     });
-    const Icon = computed(() =>
-      "icon" in props.model
-        ? require(`@/widgets/icons/${props.model.icon}`).default
-        : null
+
+    const icon = computed(() =>
+      "icon" in props.model ? `icons.${props.model.icon}` : null
     );
+
     const linkHandler = (e) => {
       e.stopPropagation();
       const hasPath = "path" in props.model;
@@ -88,28 +94,16 @@ export default {
       "event" in props.model && props.model.event.call(this);
     };
 
-    const isRoot = props.level === 1;
+    const isRoot = computed(() => props.level === 1);
 
     return {
       child,
-      Icon,
-      paddingRange: {
-        "pl-4": props.level === 1,
-        "pl-10": props.level === 2,
-        "pl-16": props.level === 3,
-        "pl-24": props.level === 4,
-      },
-      bgEffects: {
-        "bg-gray-900": !isRoot,
-        "hover:bg-opacity-75": !isRoot,
-        "hover:bg-black": !isRoot,
-        "hover:bg-opacity-50": isRoot,
-        "hover:bg-gray-900": isRoot,
-      },
+      isRoot,
       linkHandler,
       isOpen,
       childHeight,
       isActive,
+      icon,
     };
   },
 };

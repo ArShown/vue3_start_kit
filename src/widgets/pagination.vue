@@ -19,7 +19,7 @@
           aria-label="First"
         >
           <i class="h-5 w-5">
-            <ChevronDoubleLeft />
+            <icons.chevron-double-left />
           </i>
         </a>
         <a
@@ -38,7 +38,7 @@
           aria-label="Previous"
         >
           <i class="h-5 w-5">
-            <ChevronLeft />
+            <icons.chevron-left />
           </i>
         </a>
       </div>
@@ -60,7 +60,7 @@
           aria-label="Next"
         >
           <i class="h-5 w-5">
-            <ChevronRight />
+            <icons.chevron-right />
           </i>
         </a>
         <a
@@ -79,7 +79,7 @@
           aria-label="Last"
         >
           <i class="h-5 w-5">
-            <ChevronDoubleRight />
+            <icons.chevron-double-right />
           </i>
         </a>
       </div>
@@ -113,7 +113,7 @@
             @click.prevent="onFirstClick"
           >
             <i class="h-5 w-5">
-              <ChevronDoubleLeft />
+              <icons.chevron-double-left />
             </i>
           </a>
           <a
@@ -131,7 +131,7 @@
             @click.prevent="onPrevClick"
           >
             <i class="h-5 w-5">
-              <ChevronLeft />
+              <icons.chevron-left />
             </i>
           </a>
           <a
@@ -166,7 +166,7 @@
             @click.prevent="onNextClick"
           >
             <i class="w-5 h-5">
-              <ChevronRight />
+              <icons.chevron-right />
             </i>
           </a>
           <a
@@ -184,7 +184,7 @@
             @click.prevent="onLastClick"
           >
             <i class="w-5 h-5">
-              <ChevronDoubleRight />
+              <icons.chevron-double-right />
             </i>
           </a>
         </nav>
@@ -195,20 +195,10 @@
 
 <script>
 import { computed } from "vue";
-import ChevronDoubleRight from "@/widgets/icons/chevron-double-right";
-import ChevronDoubleLeft from "@/widgets/icons/chevron-double-left";
-import ChevronRight from "@/widgets/icons/chevron-right";
-import ChevronLeft from "@/widgets/icons/chevron-left";
 import { times, inc, add } from "ramda";
 
 export default {
   name: "Pagination",
-  components: {
-    ChevronDoubleLeft,
-    ChevronDoubleRight,
-    ChevronRight,
-    ChevronLeft,
-  },
   props: ["totalAmount", "currentPage", "perPage", "onClick"],
   setup(props) {
     const fromIndex = computed(

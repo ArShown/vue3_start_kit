@@ -42,27 +42,26 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
-import IndentDecrease from "@/widgets/icons/indent-decrease";
-import IndentIncrease from "@/widgets/icons/indent-increase";
-import useToast from "@/hooks/use-toast";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import { useAlert } from "@/hooks/use-alert";
 
 export default {
-  components: { IndentDecrease, IndentIncrease },
   setup() {
-    const $store = useStore();
-    const toast = useToast();
+    const store = useStore();
+    const route = useRoute();
+    const alert = useAlert();
     const isMobile = ref(false);
     const isOpen = ref(true);
     const triggerOpen = () => {
       isOpen.value = !isOpen.value;
     };
     const icon = computed(() =>
-      isOpen.value ? "IndentDecrease" : "IndentIncrease"
+      isOpen.value ? "icons.indent-decrease" : "icons.indent-increase"
     );
-    const isShowToast = computed(() => $store.state.app.showWelcomeToast);
-    const userName = computed(() => $store.state.auth.userInfo.name);
+    const isShowToast = computed(() => store.state.app.showWelcomeToast);
+    const userName = computed(() => store.state.auth.userInfo.name);
 
     const resizeHandler = () => {
       if (window.innerWidth <= 640) {
@@ -75,15 +74,15 @@ export default {
     };
     onMounted(() => {
       watch(
-        () => $store.state.route.path,
+        () => route.path,
         () => {
           if (isMobile.value && isOpen.value) isOpen.value = false;
         }
       );
 
       if (isShowToast.value) {
-        toast.success(`${userName.value}，您好！`);
-        $store.commit("app/set/welcome/toast", false);
+        alert.toast(`${userName.value}，您好！`);
+        store.commit("app/set/welcome/toast", false);
       }
 
       resizeHandler();

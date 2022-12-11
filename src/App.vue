@@ -11,19 +11,17 @@
 
 <script>
 import { computed } from "vue";
-import { useStore } from "vuex";
-import { isNil, defaultTo, path } from "ramda";
+import { useRoute } from "vue-router";
+import { isNil, defaultTo } from "ramda";
 
 export default {
   setup() {
-    const $store = useStore();
+    const route = useRoute();
     const layout = computed(() => {
       /* 一開始都是 undefined */
-      if (isNil($store.state.route.path)) return null;
+      if (isNil(route.path)) return null;
       /* 拿設定的 layout，預設是 default-layout */
-      const currentLayout = defaultTo("layout-error")(
-        path(["meta", "layout"], $store.state.route)
-      );
+      const currentLayout = defaultTo("layout-error")(route.meta.layout);
       return currentLayout;
     });
 
