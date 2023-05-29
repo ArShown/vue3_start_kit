@@ -2,7 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "target": "es2017",
     "moduleResolution": "node",
     "paths": {
