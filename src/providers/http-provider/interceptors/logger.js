@@ -1,17 +1,5 @@
-import type {
-  AxiosInterceptorManager,
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-} from "axios";
-
-type AxiosInterceptors = {
-  request: AxiosInterceptorManager<AxiosRequestConfig>;
-  response: AxiosInterceptorManager<AxiosResponse>;
-};
-
 export default {
-  install: (register: AxiosInterceptors) => {
+  install: (register) => {
     register.request.use(
       (config) => {
         console.debug(
@@ -23,7 +11,7 @@ export default {
         );
         return config;
       },
-      (error: AxiosError) => {
+      (error) => {
         console.error(
           "API REQUEST FAILED:",
           error.response?.config.method?.toUpperCase(),
@@ -44,7 +32,7 @@ export default {
         );
         return response;
       },
-      (error: AxiosError) => {
+      (error) => {
         if (error && error.response) {
           console.error(
             "API RESPONSE FAILED:",

@@ -15,7 +15,7 @@
 
 <script>
 import { computed } from "vue";
-import { useStore } from "vuex";
+import { useAuthStore } from "@/store/auth/store";
 import Scrollbar from "@/widgets/scrollbar";
 import Navigation from "@/widgets/navigation";
 
@@ -23,8 +23,8 @@ export default {
   name: "TheSideBar",
   components: { Scrollbar, Navigation },
   setup() {
-    const $store = useStore();
-    const name = computed(() => $store.state.auth.userInfo.name);
+    const authStore = useAuthStore();
+    const name = computed(() => authStore.userInfo.name);
     const menu = [
       {
         id: "1",
@@ -119,7 +119,7 @@ export default {
         id: "99",
         title: "Logout",
         icon: "logout",
-        event: () => $store.dispatch("auth/logout"),
+        event: () => authStore.logout(),
       },
     ];
 

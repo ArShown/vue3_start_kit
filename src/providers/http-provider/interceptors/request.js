@@ -1,9 +1,8 @@
-//@ts-nocheck
 import { keys, forEach, reduce, isNil, isEmpty, assoc } from "ramda";
 
-const _computedRejectData = (payload: any, { rejectNil, rejectEmpty }: any) =>
+const _computedRejectData = (payload, { rejectNil, rejectEmpty }) =>
   reduce(
-    (result, key: any) => {
+    (result, key) => {
       const value = payload[key];
       if (rejectNil && isNil(value)) return result;
       if (rejectEmpty && isEmpty(value)) return result;
@@ -15,7 +14,7 @@ const _computedRejectData = (payload: any, { rejectNil, rejectEmpty }: any) =>
 
 export default {
   install: (register) => {
-    register.request.use((config: any) => {
+    register.request.use((config) => {
       const {
         isFormData = false,
         rejectNil = true,
@@ -37,10 +36,10 @@ export default {
 
         if (isFormData) {
           const formData = new FormData();
-          const data: object = config.data;
-          forEach((key: string) => {
+          const data = config.data;
+          forEach((key) => {
             if (config.data[key] instanceof Array) {
-              forEach((value: any) => {
+              forEach((value) => {
                 formData.append(`${key}[]`, value);
               }, config.data[key]);
             } else {
@@ -53,9 +52,6 @@ export default {
       }
 
       return config;
-    });
-    register.response.use((response) => {
-      return response.data;
     });
   },
 };

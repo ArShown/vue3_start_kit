@@ -43,15 +43,17 @@
 
 <script>
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
-import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { useAlert } from "@/hooks/use-alert";
+import { useAlertService } from "@/services/alert-service";
+import { useAuthStore } from "@/store/auth/store";
+import { useWelcomStore } from "@/store/app/welcome-store";
 
 export default {
   setup() {
-    const store = useStore();
     const route = useRoute();
-    const alert = useAlert();
+    const authStore = useAuthStore();
+    const welcomeStore = useWelcomStore();
+    const alertService = useAlertService();
     const isMobile = ref(false);
     const isOpen = ref(true);
     const triggerOpen = () => {
@@ -60,8 +62,7 @@ export default {
     const icon = computed(() =>
       isOpen.value ? "icons.indent-decrease" : "icons.indent-increase"
     );
-    const isShowToast = computed(() => store.state.app.showWelcomeToast);
-    const userName = computed(() => store.state.auth.userInfo.name);
+    const userName = computed(() => authStore.userInfo.name);
 
     const resizeHandler = () => {
       if (window.innerWidth <= 640) {
@@ -72,17 +73,18 @@ export default {
         isOpen.value = true;
       }
     };
-    onMounted(() => {
-      watch(
-        () => route.path,
-        () => {
-          if (isMobile.value && isOpen.value) isOpen.value = false;
-        }
-      );
+    watch(
+      () => route.path,
+      () => {
+        if (isMobile.value && isOpen.value) isOpen.value = false;
+      },
+      { immediate: true }
+    );
 
-      if (isShowToast.value) {
-        alert.toast(`${userName.value}，您好！`);
-        store.commit("app/set/welcome/toast", false);
+    onMounted(() => {
+      if (!welcomeStore.isMessageShown) {
+        alertService.toast(`${userName.value}，您好！`);
+        welcomeStore.setMessageShown();
       }
 
       resizeHandler();

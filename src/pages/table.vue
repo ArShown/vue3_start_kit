@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
 import { computed, onMounted } from "vue";
+import { usePostsStore } from "@/store/posts/store";
 import Pagination from "@/widgets/pagination";
 
 export default {
@@ -49,15 +49,15 @@ export default {
     },
   ],
   setup() {
-    const $store = useStore();
-    const posts = computed(() => $store.state.posts);
+    const postStore = usePostsStore();
+    const posts = computed(() => postStore.$state);
 
     onMounted(() => {
-      $store.dispatch("posts/read", 1);
+      postStore.read(1);
     });
 
     const onClick = (page) => {
-      $store.dispatch("posts/read", page);
+      postStore.read(page);
     };
     return { posts, onClick };
   },

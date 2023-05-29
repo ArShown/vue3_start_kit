@@ -1,10 +1,11 @@
-// @ts-nocheck
 const files = import.meta.globEager("../services/*.js");
 
 const layouts = {
   install: (app) => {
     for (let path in files) {
-      app.use(files[path].default);
+      if (files[path].default && "install" in files[path].default) {
+        app.use(files[path].default);
+      }
     }
   },
 };

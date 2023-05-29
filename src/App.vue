@@ -6,7 +6,6 @@
       </transition>
     </router-view>
   </component>
-  <the-loading-cover />
 </template>
 
 <script lang="ts">

@@ -1,7 +1,8 @@
-//@ts-nocheck
+import { defineService } from "@/_app/_define";
 import { createRouter, createWebHashHistory } from "vue-router";
 import createRoutes from "@/_app/routes";
-import store from "./store-service";
+import { useBreadcrumbStore } from "@/store/app/breadcrumb-store";
+import { useAuthStore } from "@/store/auth/store";
 import { path } from "ramda";
 
 const options = {
@@ -28,7 +29,11 @@ router.beforeResolve(async (to, from, next) => {
     return false;
   }
 
-  const { needAuth = true, breadcrumb = [] }: any = path(
+  /** hooks */
+  const breadcrumbStore = useBreadcrumbStore();
+  const authStore = useAuthStore();
+
+  const { needAuth = true, breadcrumb = [] } = path(
     ["matched", 0, "components", "default"],
     to
   );
@@ -42,16 +47,18 @@ router.beforeResolve(async (to, from, next) => {
      */
 
     /* 沒有登入就導向登入頁 */
-    if (!store.getters["auth/isLogin"]) {
+    if (!authStore.isLogin) {
       next({ name: "/login" });
       return false;
     }
   }
 
   /* 寫入麵包屑 */
-  store.commit("app/set/breadcrumb", breadcrumb);
+  breadcrumbStore.set(breadcrumb);
 
   next();
 });
+
+export const useRouterService = defineService("router-service", router);
 
 export default router;

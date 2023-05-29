@@ -1,4 +1,3 @@
-// @ts-nocheck
 const files = import.meta.globEager("../components/**/*.vue");
 const modules = [];
 

@@ -1,4 +1,3 @@
-//@ts-nocheck
 import Mock from "mockjs";
 const files = import.meta.globEager("./*.js");
 

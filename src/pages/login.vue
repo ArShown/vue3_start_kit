@@ -47,8 +47,8 @@
 
 <script>
 import { reactive, computed } from "vue";
-import { useStore } from "vuex";
-import useVuelidate, { required } from "@/hooks/use-vuelidate";
+import { useAuthStore } from "@/store/auth/store";
+import { useVuelidate, required } from "@/hooks/use-vuelidate";
 
 export default {
   needAuth: false,
@@ -66,7 +66,7 @@ export default {
       },
       password: { required },
     };
-    const $store = useStore();
+    const authStore = useAuthStore();
     const $v = useVuelidate(rules, form);
 
     // computed state
@@ -86,7 +86,7 @@ export default {
     const loginHandler = () => {
       $v.value.$touch();
       if ($v.value.$invalid) return false;
-      $store.dispatch("auth/login");
+      authStore.login();
     };
 
     return {
